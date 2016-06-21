@@ -5,4 +5,4 @@ from arxivmail import create_app
 
 __all__ = ["app"]
 
-app = creat_app()
+app = create_app()
