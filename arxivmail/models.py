@@ -2,7 +2,7 @@
 
 from __future__ import division, print_function
 
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSON
 from werkzeug.security import (
     generate_password_hash, check_password_hash
