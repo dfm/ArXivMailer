@@ -33,5 +33,4 @@ def subscribe():
     db.session.add(user)
     db.session.commit()
 
-    return "Subscribed {0} to {1}, {2}".format(email, category_name,
-                                               user.email_hash)
+    return "Subscribed {0} to {1}".format(email, category_name)

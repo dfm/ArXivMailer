@@ -2,11 +2,9 @@
 
 from __future__ import division, print_function
 
+import flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSON
-from werkzeug.security import (
-    generate_password_hash, check_password_hash
-)
 
 
 __all__ = ["db", "Subscriber", "Abstract", "Category"]
@@ -31,7 +29,6 @@ class Subscriber(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String)
-    email_hash = db.Column(db.String)
     word_vector = db.Column(JSON)
     subscriptions = db.relationship("Category", secondary=subscriptions,
                                     backref=db.backref("subscribers",
@@ -39,7 +36,6 @@ class Subscriber(db.Model):
 
     def __init__(self, email):
         self.email = email
-        self.email_hash = generate_password_hash(email)
 
 
 class Abstract(db.Model):
