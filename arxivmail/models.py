@@ -16,7 +16,8 @@ db = SQLAlchemy()
 
 subscriptions = db.Table("subscriptions",
     db.Column("subscriber_id", db.Integer, db.ForeignKey("subscriber.id")),
-    db.Column("category_id", db.Integer, db.ForeignKey("category.id"))
+    db.Column("category_id", db.Integer, db.ForeignKey("category.id")),
+    db.Column("active", db.Boolean, default=True),
 )
 
 abstract_categories = db.Table("abstract_categories",
