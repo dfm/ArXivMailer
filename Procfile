@@ -1,1 +1,1 @@
-web: gunicorn arxivmail:create_app()
+web: gunicorn wsgi:app
