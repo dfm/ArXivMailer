@@ -14,10 +14,12 @@ __all__ = [
 class CreateTablesCommand(Command):
     def run(self):
         db.create_all()
+
+        # Create the list of all
         data = pkgutil.get_data("arxivmail",
                                 "data/categories.txt").decode("ascii")
         for cat in data.splitlines():
-            if Category.query.filter_by(arxiv_name=cat).all() is not None:
+            if Category.query.filter_by(arxiv_name=cat).count() > 0:
                 continue
             db.session.add(Category(cat))
         db.session.commit()
