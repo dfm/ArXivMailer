@@ -17,6 +17,8 @@ class CreateTablesCommand(Command):
         data = pkgutil.get_data("arxivmail",
                                 "data/categories.txt").decode("ascii")
         for cat in data.splitlines():
+            if Category.query.filter_by(arxiv_name=cat).all() is not None:
+                continue
             db.session.add(Category(cat))
         db.session.commit()
 
