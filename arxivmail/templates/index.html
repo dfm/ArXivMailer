@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="blockform">
+    <form action="" method="POST">
+        <h3>Subscribe to The ArXiv Mailer</h3>
+        <div class="form-group">
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <select name="category" class="form-control">
+                {% for cat in categories %}
+                <option>{% if not cat.is_parent %}&nbsp;&nbsp;{% endif %}{{ cat.arxiv_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>
+
+{% endblock %}

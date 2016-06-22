@@ -1,0 +1,107 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #111111;
+}
+
+#bg {
+    position: fixed;
+    background: url('https://images.unsplash.com/photo-1432821579285-1b649e5b1ce3?q=80&fm=jpg&crop=entropy&w=1800&h=1200&fit=crop') no-repeat;
+    /* background: url('https://source.unsplash.com/category/nature/1800x1200') no-repeat; */
+
+    -webkit-filter: blur(2px);
+       -moz-filter: blur(2px);
+         -o-filter: blur(2px);
+        -ms-filter: blur(2px);
+            filter: blur(2px);
+
+    height: 100%;
+    width: 100%;
+    background-color: #111111;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    background-size: cover;
+    background-position: center center;
+    font-family: "Helvetica Neue";
+}
+
+#unsplash {
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    color: #ddd;
+    background: rgba(0,0,0,0.4);
+    padding: 8px 10px;
+}
+
+#unsplash a {
+    color: inherit !important;
+}
+
+.blockform {
+    position: relative;
+    height: 100%;
+    background-color: transparent !important;
+}
+
+.blockform form {
+    position: absolute;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.4);
+    padding: 20px 30px 25px;
+    text-align: center;
+}
+
+.blockform h3 {
+    margin: 0 0 15px;
+    color: #fff;
+}
+
+#flashes {
+    display: block;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    list-style: none;
+    padding: 5px 0;
+    text-align: center;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+}
+
+#flashes li {
+    padding: 0;
+    margin: 0;
+}
+
+.pace {
+    -webkit-pointer-events: none;
+    pointer-events: none;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.pace-inactive {
+    display: none;
+}
+
+.pace .pace-progress {
+    background: #29d;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    height: 2px;
+}
