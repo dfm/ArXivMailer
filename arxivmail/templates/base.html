@@ -11,7 +11,10 @@
     </head>
     <body>
 
-<div id="bg"></div>
+<div id="bg"
+     {% if bg_img %}
+     style="background-image:url('{{ bg_img }}')"
+     {% endif %}></div>
 
 {% block content %}{% endblock %}
 

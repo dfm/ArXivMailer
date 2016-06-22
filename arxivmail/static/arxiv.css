@@ -28,6 +28,8 @@ body {
     background-size: cover;
     background-position: center center;
     font-family: "Helvetica Neue";
+
+    z-index: -9999;
 }
 
 #unsplash {
@@ -37,32 +39,12 @@ body {
     color: #ddd;
     background: rgba(0,0,0,0.4);
     padding: 8px 10px;
+
+    z-index: 10;
 }
 
 #unsplash a {
     color: inherit !important;
-}
-
-.blockform {
-    position: relative;
-    height: 100%;
-    background-color: transparent !important;
-}
-
-.blockform form {
-    position: absolute;
-    width: 400px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0,0,0,0.4);
-    padding: 20px 30px 25px;
-    text-align: center;
-}
-
-.blockform h3 {
-    margin: 0 0 15px;
-    color: #fff;
 }
 
 #flashes {
@@ -104,4 +86,50 @@ body {
     right: 100%;
     width: 100%;
     height: 2px;
+}
+
+.blockform {
+    position: relative;
+    height: 100%;
+    background-color: transparent !important;
+}
+
+.blockform-inner {
+    width: 400px;
+    background: rgba(0,0,0,0.4);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 20px 30px 25px;
+}
+
+.blockform .error {
+    background: rgba(0,0,0,0.4);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 20px 30px 25px;
+    color: #fff;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.container {
+    display: absolute;
+    width: 400px;
+    background: rgba(0,0,0,0.4);
+    margin: 0 auto;
+    z-index: 9999;
+    color: #fff;
+    padding: 20px 30px 25px;
+    min-height: 100%;
+}
+
+.blockform h3, .container h3 {
+    margin: 0 0 15px;
+    color: #fff;
 }

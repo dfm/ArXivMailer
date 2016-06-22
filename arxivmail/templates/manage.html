@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h3>Manage your subscriptions</h3>
+
+    <form action="" method="POST">
+    {% for cat in categories %}
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="{{- cat.arxiv_name -}}"
+                {%- if cat in user.subscriptions -%}checked{%- endif -%}>
+            {% if not cat.is_parent %}&nbsp;&nbsp;{% endif %}{{ cat.arxiv_name }}
+        </label>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Update</button>
+    <button class="btn btn-default" onclick="javascript:unsubscribe();">Unsubscribe All</button>
+    </form>
+</div>
+
+{% endblock %}
