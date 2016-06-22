@@ -6,6 +6,8 @@ import flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSON
 
+from itsdangerous import Signer
+
 
 __all__ = ["db", "Subscriber", "Abstract", "Category"]
 
@@ -35,6 +37,21 @@ class Subscriber(db.Model):
 
     def __init__(self, email):
         self.email = email
+
+    def get_token(self):
+        signer = Signer(flask.current_app.config["SECRET_KEY"])
+        return signer.sign("{0}".format(self.id).encode("ascii")) \
+            .decode("ascii")
+
+    @staticmethod
+    def check_token(token):
+        signer = Signer(flask.current_app.config["SECRET_KEY"])
+        try:
+            id = int(signer.unsign(token).decode("ascii"))
+        except Exception as e:
+            return None
+        user = Subscriber.query.filter_by(id=id).first()
+        return user
 
 
 class Abstract(db.Model):

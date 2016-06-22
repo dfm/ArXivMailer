@@ -65,16 +65,13 @@ class RunMailerCommand(Command):
                 cats += [c.split(".")[0] for c in cats]
                 if len(cnms & set(cats)):
                     abstracts[entry["id"]] = entry
-            # abstracts = list(abstracts.values())
+
             abstracts = [a for a in sorted(abstracts.values(), key=lambda o:
                                            (o["created"], o["id"]))]
             abstracts = abstracts[::-1]
-            # random.shuffle(abstracts)
-            # print(abstracts[-1])
 
             html_body = flask.render_template("email.html",
-                                              abstracts=abstracts)
-            # print(abstracts[0])
-            # print(html_body)
+                                              abstracts=abstracts,
+                                              user=user)
 
             send_email(user.email, "Email", html_body, "Some text")

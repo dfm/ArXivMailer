@@ -7,7 +7,9 @@
     {% else %}
     {{ entry.authors[:4]|join(", ", attribute="fullname") }}, et al.
     {% endif %}<br>
-    <p>{{ entry.abstract }}</p>
+    <p>{{ entry.abstract[:100] }}...</p>
 </li>
 {% endfor %}
 </ul>
+
+<a href="http://arxiv.dfm.io/unsubscribe/{{ user.get_token() }}">Unsubscribe</a>
