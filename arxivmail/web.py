@@ -48,6 +48,17 @@ def index():
     categories = Category.query.order_by("arxiv_name").all()
     return flask.render_template("index.html", categories=categories)
 
+@web.route("/confirm/<token>")
+def confirm(token):
+    user = Subscriber.check_token(token)
+    if user is None:
+        return flask.abort(404)
+    user.confirmed = True
+    db.session.add(user)
+    db.session.commit()
+    flask.flash("Confirmed {0}.".format(user.email))
+    return flask.redirect(flask.url_for(".manage", token=token))
+
 @web.route("/manage/<token>", methods=["GET", "POST"])
 def manage(token):
     user = Subscriber.check_token(token)
