@@ -18,8 +18,9 @@ def send_email(to, subject, html_body, text_body=None, from_=None):
         ("to", to),
         ("subject", subject),
         ("html", html_body),
-        ("text", text_body),
     ])
+    if text_body is not None:
+        data["text"] = text_body
 
     r = requests.post(url, data=data,
                       auth=("api",

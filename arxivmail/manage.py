@@ -10,7 +10,7 @@ from flask_script import Command, Option
 
 from .oai import download
 from .mail import send_email
-from .models import db, Category, Subscriber, Abstract, subscriptions
+from .models import db, Category, Subscriber, subscriptions
 
 __all__ = [
     "CreateTablesCommand", "DropTablesCommand", "RunMailerCommand",

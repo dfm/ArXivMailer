@@ -2,6 +2,7 @@
 
 import flask
 
+from .mail import send_email
 from .models import db, Subscriber, Category
 
 __all__ = ["web"]
@@ -31,6 +32,11 @@ def index():
             user = Subscriber.query.filter_by(email=email).first()
             if user is None:
                 user = Subscriber(email)
+                db.session.add(user)
+                db.session.commit()
+                html_body = flask.render_template("welcome_email.html",
+                                                  user=user)
+                send_email(email, "Welcome", html_body)
             if cat in user.subscriptions:
                 flask.flash("Already subscribed to {0}".format(category))
             else:
@@ -42,11 +48,15 @@ def index():
     categories = Category.query.order_by("arxiv_name").all()
     return flask.render_template("index.html", categories=categories)
 
-@web.route("/manage/<token>")
+@web.route("/manage/<token>", methods=["GET", "POST"])
 def manage(token):
     user = Subscriber.check_token(token)
     if user is None:
         return flask.abort(404)
+
+    if flask.request.method == "POST":
+        pass
+
     categories = Category.query.order_by("arxiv_name").all()
     return flask.render_template("manage.html", categories=categories,
                                  user=user)
