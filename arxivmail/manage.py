@@ -57,7 +57,7 @@ class RunMailerCommand(Command):
             with open(test_file, "r") as f:
                 data = json.load(f)
 
-        for user in Subscriber.query.all():
+        for user in Subscriber.query.filter_by(confirmed=True).all():
             cnms = set([sub.arxiv_name for sub in user.subscriptions])
             abstracts = dict()
             for entry in data:

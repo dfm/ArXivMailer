@@ -8,6 +8,7 @@ class Config(object):
     CSRF_ENABLED = True
 
     SECRET_KEY = os.environ.get("SECRET_KEY", "super secret key")
+    SUPER_SECRET_KEY = os.environ.get("SUPER_SECRET_KEY", "superer_secret_key")
 
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL", "postgresql://localhost/arxivmail"
