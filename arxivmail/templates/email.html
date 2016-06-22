@@ -1,15 +1,20 @@
-<ul>
+{% extends "email_base.html" %}
+
+{% block content %}
+
+<div style="text-align:left;width:600px;">
 {% for entry in abstracts -%}
-<li>
-    <a href="https://arxiv.org/abs/{{ entry.id }}">{{ entry.title }}</a><br>
+<p>
+    <strong><a href="https://arxiv.org/abs/{{ entry.id }}">{{ entry.title }}</a><br>
     {% if entry.authors|length < 5 %}
     {{ entry.authors|join(", ", attribute="fullname") }}
     {% else %}
     {{ entry.authors[:4]|join(", ", attribute="fullname") }}, et al.
-    {% endif %}<br>
-    <p>{{ entry.abstract[:100] }}...</p>
-</li>
+    {% endif %}</strong><br>
+    <i>{{ entry.abstract[:300] }}...</i><br>
+    <small>{{ entry.categories|join("; ") }}</small>
+</p>
 {% endfor %}
-</ul>
+</div>
 
-<a href="http://arxiv.dfm.io/unsubscribe/{{ user.get_token() }}">Unsubscribe</a>
+{% endblock %}

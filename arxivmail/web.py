@@ -9,12 +9,6 @@ __all__ = ["web"]
 
 web = flask.Blueprint("web", __name__)
 
-@web.errorhandler(404)
-def page_not_found(e):
-    return flask.render_template(
-        "404.html", bg_img="https://images.unsplash.com/gifs/fail/fail-5.gif"
-    ), 404
-
 
 @web.route("/", methods=["GET", "POST"])
 def index():

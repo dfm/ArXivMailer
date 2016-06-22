@@ -74,4 +74,8 @@ class RunMailerCommand(Command):
                                               abstracts=abstracts,
                                               user=user)
 
-            send_email(user.email, "Email", html_body, "Some text")
+            day = datetime.utcnow().weekday()
+            day = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+                   "Saturday", "Sunday"][day]
+            send_email(user.email, "Mailing for {0}".format(day),
+                       html_body)

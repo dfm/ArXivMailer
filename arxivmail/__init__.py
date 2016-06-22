@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import flask
+import random
 
 __all__ = ["create_app"]
 
@@ -10,7 +11,10 @@ def before_first_request():
 
 def page_not_found(e):
     return flask.render_template(
-        "404.html", bg_img="https://images.unsplash.com/gifs/fail/fail-5.gif"
+        "404.html",
+        bg_img="https://images.unsplash.com/gifs/fail/fail-{0}.gif".format(
+            random.randint(1, 9)
+        )
     ), 404
 
 def create_app(config_object="arxivmail.config.ProductionConfig"):
