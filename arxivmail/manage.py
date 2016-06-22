@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import random
 import pkgutil
 from datetime import datetime, timedelta
 
@@ -62,4 +63,5 @@ class RunMailerCommand(Command):
                 cats += [c.split(".")[0] for c in cats]
                 if len(cnms & set(cats)):
                     abstracts[entry["id"]] = entry
-            print(abstracts)
+            abstracts = list(abstracts.items())
+            random.shuffle(abstracts)
