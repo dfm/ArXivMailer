@@ -41,10 +41,12 @@ def email_subscribe():
     if flask.request.method == "POST":
         sender = flask.request.form.get("sender")
         body = flask.request.form.get("stripped-text", "")
+        print(sender, body)
         for line in body.splitlines():
+            print(sender, line.strip())
             do_subscribe(sender, line.strip())
 
-    return "nothing"
+    return sender
 
 @web.route("/subscribe/<category_name>")
 def subscribe(category_name):
