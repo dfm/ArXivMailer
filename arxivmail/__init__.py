@@ -8,6 +8,10 @@ __all__ = ["create_app"]
 def before_first_request():
     pass
 
+def page_not_found(e):
+    return flask.render_template(
+        "404.html", bg_img="https://images.unsplash.com/gifs/fail/fail-5.gif"
+    ), 404
 
 def create_app(config_object="arxivmail.config.ProductionConfig"):
     app = flask.Flask(__name__)
@@ -17,8 +21,8 @@ def create_app(config_object="arxivmail.config.ProductionConfig"):
     from .models import db
     db.init_app(app)
 
-    # Before request.
     app.before_first_request(before_first_request)
+    app.register_error_handler(404, page_not_found)
 
     # Bind the blueprints.
     from .web import web
