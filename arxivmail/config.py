@@ -14,6 +14,8 @@ class Config(object):
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    MAILGUN_API_KEY = os.environ.get("MAILGUN_API_KEY", None)
+
 
 class ProductionConfig(Config):
     DEBUG = False
