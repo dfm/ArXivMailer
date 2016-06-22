@@ -12,11 +12,10 @@ web = flask.Blueprint("web", __name__)
 def index():
     return "Hello"
 
-@web.route("/subscribe")
-def subscribe():
+@web.route("/subscribe/<category_name>")
+def subscribe(category_name):
     email = flask.request.args.get("email", None)
-    category_name = flask.request.args.get("category", None)
-    if email is None or category_name is None:
+    if email is None:
         return "Missing required argument 'email' or 'category'", 400
 
     category = Category.query.filter_by(

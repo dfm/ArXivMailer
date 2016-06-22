@@ -15,7 +15,6 @@ db = SQLAlchemy()
 subscriptions = db.Table("subscriptions",
     db.Column("subscriber_id", db.Integer, db.ForeignKey("subscriber.id")),
     db.Column("category_id", db.Integer, db.ForeignKey("category.id")),
-    db.Column("active", db.Boolean, default=True),
 )
 
 abstract_categories = db.Table("abstract_categories",
@@ -52,11 +51,16 @@ class Abstract(db.Model):
         self.arxiv_id = arxiv_id
 
 
+
 class Category(db.Model):
     __tablename__ = "category"
 
     id = db.Column(db.Integer, primary_key=True)
     arxiv_name = db.Column(db.String, unique=True)
+    is_parent = db.Column(db.Boolean)
+    parent_id = db.Column(db.Integer, db.ForeignKey("category.id"))
+    children = db.relationship("Category", lazy="joined")
 
-    def __init__(self, arxiv_name):
+    def __init__(self, arxiv_name, is_parent):
         self.arxiv_name = arxiv_name
+        self.is_parent = is_parent

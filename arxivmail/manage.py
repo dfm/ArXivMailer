@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import json
 import pkgutil
+from datetime import datetime, timedelta
 
 from flask_script import Command, Option
 
-from .models import db, Category
+from .oai import download
+from .models import db, Category, Subscriber, Abstract, subscriptions
 
 __all__ = [
-    "CreateTablesCommand", "DropTablesCommand",
+    "CreateTablesCommand", "DropTablesCommand", "RunMailerCommand",
 ]
 
 
@@ -19,9 +22,16 @@ class CreateTablesCommand(Command):
         data = pkgutil.get_data("arxivmail",
                                 "data/categories.txt").decode("ascii")
         for cat in data.splitlines():
-            if Category.query.filter_by(arxiv_name=cat).count() > 0:
-                continue
-            db.session.add(Category(cat))
+            parent = Category.query.filter_by(
+                arxiv_name=cat.split(".")[0]).first()
+            if parent is None:
+                parent = Category(cat.split(".")[0], True)
+                db.session.add(parent)
+            if "." in cat:
+                if Category.query.filter_by(arxiv_name=cat).count() == 0:
+                    child = Category(cat, False)
+                    db.session.add(child)
+                    parent.children.append(child)
         db.session.commit()
 
 
@@ -30,11 +40,26 @@ class DropTablesCommand(Command):
         db.drop_all()
 
 
-# class UpdateCommand(Command):
+class RunMailerCommand(Command):
 
-#     option_list = (
-#         Option("-s", "--since", dest="since", required=False),
-#     )
+    option_list = (
+        Option("-f", "--file", dest="test_file", required=False),
+    )
 
-#     def run(self, since):
-#         update(since=since)
+    def run(self, test_file=None):
+        if test_file is None:
+            since = (datetime.utcnow() + timedelta(-1)).strftime("%Y-%m-%d")
+            data = [abstract for abstract in download(since)]
+        else:
+            with open(test_file, "r") as f:
+                data = json.load(f)
+
+        for user in Subscriber.query.all():
+            cnms = set([sub.arxiv_name for sub in user.subscriptions])
+            abstracts = dict()
+            for entry in data:
+                cats = entry["categories"]
+                cats += [c.split(".")[0] for c in cats]
+                if len(cnms & set(cats)):
+                    abstracts[entry["id"]] = entry
+            print(abstracts)
