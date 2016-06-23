@@ -9,7 +9,7 @@
     {% for cat in categories %}
     <div class="checkbox">
         <label>
-            <input type="checkbox" value="{{- cat.arxiv_name -}}"
+            <input type="checkbox" name="category" value="{{- cat.arxiv_name -}}"
                 {%- if cat in user.subscriptions -%}checked{%- endif -%}>
             {% if not cat.is_parent %}&nbsp;&nbsp;{% endif %}{{ cat.arxiv_name }}
         </label>

@@ -60,7 +60,8 @@ def manage(token):
         return flask.abort(404)
 
     if flask.request.method == "POST":
-        pass
+        # email = flask.request.form.get("email", None)
+        print(flask.request.form.getlist("category"))
 
     categories = Category.query.order_by("arxiv_name").all()
     return flask.render_template("manage.html", categories=categories,
