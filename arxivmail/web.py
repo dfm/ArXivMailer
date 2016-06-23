@@ -59,10 +59,25 @@ def manage(token):
     if user is None:
         return flask.abort(404)
 
-    if flask.request.method == "POST":
-        # email = flask.request.form.get("email", None)
-        print(flask.request.form.getlist("category"))
-
     categories = Category.query.order_by("arxiv_name").all()
+    cdict = dict((c.arxiv_name, c) for c in categories)
+
+    if flask.request.method == "POST":
+        cats = [cdict.get(c, None)
+                for c in flask.request.form.getlist("category")]
+        user.subscriptions = [c for c in cats if c is not None]
+
     return flask.render_template("manage.html", categories=categories,
                                  user=user)
+
+
+@web.route("/unsubscribe/<token_or_email>")
+def unsubscribe(token_or_email):
+    user = Subscriber.query.filter_by(email=token_or_email).first()
+    if user is None:
+        user = Subscriber.check_token(token_or_email)
+    if user is not None:
+        db.session.delete(user)
+        db.session.commit()
+    flask.flash("Unsubscribed.")
+    return flask.redirect(flask.url_for(".index"))

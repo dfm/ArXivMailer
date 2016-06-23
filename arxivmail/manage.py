@@ -51,7 +51,7 @@ class RunMailerCommand(Command):
 
     def run(self, test_file=None):
         if test_file is None:
-            since = (datetime.utcnow() + timedelta(-1)).strftime("%Y-%m-%d")
+            since = datetime.utcnow().strftime("%Y-%m-%d")
             data = [abstract for abstract in download(since)]
         else:
             with open(test_file, "r") as f:

@@ -16,7 +16,7 @@
     </div>
     {% endfor %}
     <button type="submit" class="btn btn-primary">Update</button>
-    <button class="btn btn-default" onclick="javascript:unsubscribe();">Unsubscribe All</button>
+    <a href="{{ url_for('.unsubscribe', token_or_email=user.email) }}" class="btn btn-default">Unsubscribe All</a>
     </form>
 </div>
 
